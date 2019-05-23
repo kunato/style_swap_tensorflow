@@ -29,7 +29,8 @@ class BaseDataLoader:
                 num_threads=num_threads,
                 capacity=5 * self.config.batch_size
             )
-        image_queue = slim.prefetch_queue.prefetch_queue([images], capacity=capacity)
+        image_queue = slim.prefetch_queue.prefetch_queue(
+            [images], capacity=capacity)
         return image_queue.dequeue()
 
 
@@ -53,12 +54,10 @@ class RecordDataLoader(BaseDataLoader):
             reader=reader,
             decoder=decoder,
             items_to_descriptions={},
-            num_samples=self.config.num_sampels
+            num_samples=self.config.num_samples
         )
         provider = slim.dataset_data_provider.DatasetDataProvider(
             data_set, shuffle=self.shuffle, num_epochs=self.config.num_epochs)
 
         item_keys = list(self.items_to_handlers.keys())
         return provider.get(item_keys)
-
-

@@ -1,17 +1,16 @@
 {
-
   "checkpoint_exclude_scopes": "vgg_16/fc",
-  "loss_model_file": "/root/data/vgg/vgg_16.ckpt",
+  "loss_model_file": "/home/kunato/disk2/vgg_16.ckpt",
   "log_name": "1",
 
-  "learning_rate": 0.00003,
+  "learning_rate": 0.001,
 
-  "num_sampels": 1000,
-  "record_file_name": "/root/data/train2017/image_train_*.tfrecord",
-  "Image_files": "/root/project/style/*.jpg",
+  "num_samples": 3000,
+  "record_file_name": "/home/kunato/disk2/coco/datasets/image_train_*.tfrecord",
+  "Image_files": "/home/kunato/disk2/style/style_train_*.tfrecord",
   "exp_name": "style_swap",
   "batch_size": 2,
   "num_epochs": 2,
-  "weight_regulation_scale": 0.01,
+  "weight_regulation_scale": 0.05,
   "net_name": "vgg_16"
 }
