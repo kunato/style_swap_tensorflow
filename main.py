@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-from data_loader import *
+from data_loader import COCODataLoader, TFExampleLoader
 from models.style_swap_model import StyleSwapModel
 from trainers.style_swap_trainer import StyleSwapTrainer
 from utils.config import process_config
@@ -24,7 +24,8 @@ def evaluate(config, content_pattern, style_pattern):
             evaluate_size = ci.shape[:2]
 
             def save(stylize_fn, s_name):
-                save_image(stylize_fn(ci), "{}/{}_{}.jpg".format(save_folder, c_name, s_name))
+                save_image(stylize_fn(ci),
+                           "{}/{}_{}.jpg".format(save_folder, c_name, s_name))
         if is_video(c_file_path):
             cap, fps, size = get_video_capture(c_file_path)
             evaluate_size = size[::-1]
@@ -49,7 +50,8 @@ def evaluate(config, content_pattern, style_pattern):
                             })
                             return np.array(inversed, dtype=np.uint8)
 
-                        s_name = os.path.splitext(os.path.split(s_file_path)[-1])[0]
+                        s_name = os.path.splitext(
+                            os.path.split(s_file_path)[-1])[0]
                         save(stylize, s_name)
         if is_video(c_file_path):
             cap.release()
@@ -58,7 +60,8 @@ def evaluate(config, content_pattern, style_pattern):
 def train(config):
     record_loader = COCODataLoader(config, False)
     config.num_epochs = None
-    image_loader = ImageDataLoader(config, True)
+    # image_loader = ImageDataLoader(config, True)
+    image_loader = TFExampleLoader(config, False)
 
     model = StyleSwapModel(config, [record_loader, image_loader])
     model.init_train_model()

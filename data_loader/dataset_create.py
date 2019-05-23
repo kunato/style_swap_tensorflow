@@ -7,7 +7,7 @@ slim = tf.contrib.slim
 
 dataset_dir = "../datasets"
 
-image_folder = r"e:\\ai_challenger\\coco\\data\\train2017\\train2017\\"
+image_folder = '/Users/kunato/Downloads/train/'
 
 _IMAGE_SIZE = 512
 
@@ -15,7 +15,8 @@ train_val_rate = {"train": 0.75, "val": 0.2, "test": 0.05}
 
 RECORD_COUNT_PER_FILE = 3000
 
-tfrecord_file_name = os.path.join(dataset_dir, "image_{}_{}.tfrecord")
+tfrecord_file_name = os.path.join(dataset_dir, "style_{}_{}.tfrecord")
+
 
 def int64_feature(values):
     """Returns a TF-Feature of int64s.
@@ -87,7 +88,8 @@ def main():
                         for index in range(start + split_i * RECORD_COUNT_PER_FILE,
                                            min(end, start + (split_i + 1) * RECORD_COUNT_PER_FILE)):
                             fname = filenames[index]
-                            sys.stdout.write("\r>> Reading file [%s] image" % fname)
+                            sys.stdout.write(
+                                "\r>> Reading file [%s] image" % fname)
                             sys.stdout.flush()
                             img = cv2.imread(fname, cv2.IMREAD_COLOR)
                             img = img[:, :, ::-1]
@@ -99,6 +101,7 @@ def main():
                                 jpeg_str, b'jpeg', _IMAGE_SIZE, _IMAGE_SIZE
                             ).SerializeToString())
         start += int(rate*len(filenames))
+
 
 if __name__ == '__main__':
     main()

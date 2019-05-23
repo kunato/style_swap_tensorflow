@@ -3,5 +3,4 @@
 
 from data_loader.image_data_loader import ImageDataLoader
 from data_loader.coco_data_loader import COCODataLoader
-
-
+from data_loader.tf_example_loader import TFExampleLoader
